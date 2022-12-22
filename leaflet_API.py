@@ -1,11 +1,13 @@
 import base64
 from bs4 import BeautifulSoup
+import config
 import json
 import re
 import requests
 import time
 
-GOOGLE_URL = 'https://script.google.com/macros/s/AKfycbyZ0GdYBJ4GXefZR_C1iNtaMkA4NnktxdOzFgBHZuZugNHjBV9ETe4zoNS0w3CTLC1QWg/exec'
+GOOGLE_URL = config.GOOGLE_URL
+LINE_TOKEN = config.LINE_TOKEN
 USER_AGENT = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36'
 
 def get_image_base64(url):
@@ -24,8 +26,7 @@ def get_leaflet_API():
 
 def line_notify(shop, image):
     url = "https://notify-api.line.me/api/notify"
-    token = "RGszAbYdsANHFRQ3b56ZLDh1YEJuQr6lWSAhxZtYxz2"
-    headers = {"Authorization" : "Bearer "+ token}
+    headers = {"Authorization" : "Bearer "+ LINE_TOKEN}
     message = f"\n{shop}'s New Leaflet"
     payload = {"message" : message}
     files = {"imageFile": image}
@@ -102,7 +103,7 @@ def post_to_update(base64_dict):
     print("post-API...")
     data = json.dumps(base64_dict)
     response = requests.post(GOOGLE_URL, data=data)
-    print(f"http Code: {response.status_code} text: {response.text}")
+    print(f"http Code: {response.status_code} - {response.text}")
 
 
 def post_to_LINE(shop, origin_dict, new_dict, image_dict):
@@ -111,10 +112,10 @@ def post_to_LINE(shop, origin_dict, new_dict, image_dict):
     image_value = image_dict.values()        
     for new_base64, image in zip(new_value, image_value):
         if not new_base64 in origin_value:
-            print(f"{shop}更新")
+            print(f"{shop} - 更新")
             line_notify(shop, image)
         else:
-            print(f"{shop}更新なし")
+            print(f"{shop} - 更新なし")
 
 
 if __name__=="__main__":
