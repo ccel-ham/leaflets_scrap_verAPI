@@ -2,7 +2,7 @@
 name: leaflet_API
 on:
   push:
-  schedule:
+  #schedule:
   #7:00起動
   # - cron: '0 22 * * *'
 
