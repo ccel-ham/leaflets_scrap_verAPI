@@ -95,7 +95,7 @@ def main():
         post_to_LINE(key, api_dict[key], base64_dict[key], image_dict[key])
     post_to_update(base64_dict)
     print("...END")
-    print(f"処理時間{round(time.time()-start)}秒")
+    print(f"PROCCESSING TIME: {round(time.time()-start)} sec")
 
     return
 
@@ -103,7 +103,7 @@ def post_to_update(base64_dict):
     print("post-API...")
     data = json.dumps(base64_dict)
     response = requests.post(GOOGLE_URL, data=data)
-    print(f"http Code: {response.status_code} - {response.text}")
+    print(f"Response Code: {response.status_code} - {response.text}")
 
 
 def post_to_LINE(shop, origin_dict, new_dict, image_dict):
@@ -112,10 +112,10 @@ def post_to_LINE(shop, origin_dict, new_dict, image_dict):
     image_value = image_dict.values()        
     for new_base64, image in zip(new_value, image_value):
         if not new_base64 in origin_value:
-            print(f"{shop} - 更新")
+            print(f"{shop} - UP DATE")
             line_notify(shop, image)
         else:
-            print(f"{shop} - 更新なし")
+            print(f"{shop} - SAME")
 
 
 if __name__=="__main__":
