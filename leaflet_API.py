@@ -46,13 +46,14 @@ def scraping_yama():
     i = 1
     for class_name in class_name_list:
         a_tag = soup.find('a', class_=class_name)
-        img_tag = a_tag.find('img')
-        _img = img_tag.get("src")
-        img_url = url_header + _img.replace("../","")
-        base64data, image = get_image_base64(img_url)
-        base64_list[f"yamada-{i}"] = base64data
-        image_list[f"yamada-{i}"] = image
-        i += 1
+        if not a_tag is None:
+            img_tag = a_tag.find('img')
+            _img = img_tag.get("src")
+            img_url = url_header + _img.replace("../","")
+            base64data, image = get_image_base64(img_url)
+            base64_list[f"yamada-{i}"] = base64data
+            image_list[f"yamada-{i}"] = image
+            i += 1
     return base64_list, image_list
 
 
