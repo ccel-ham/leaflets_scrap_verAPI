@@ -62,7 +62,10 @@ def scraping_Tokubai(name, url):
     headers = {'User-Agent': USER_AGENT}
     res=requests.get(url, headers=headers)
     soup = BeautifulSoup(res.text,"html.parser")
-    section_tag = soup.find('section', class_="branding_shop_component leaflet_component")
+    print(soup)
+    section_tag = soup.find(id="leaflet")
+    
+    print(section_tag)
     img_tags = section_tag.find_all('img')
     base64_list = {}
     image_list = {}
