@@ -62,7 +62,7 @@ def scraping_Tokubai(name, url):
     headers = {'User-Agent': USER_AGENT}
     res=requests.get(url, headers=headers)
     soup = BeautifulSoup(res.text,"html.parser")
-    print(soup)
+    #print(soup)
     section_tag = soup.find(id="leaflet")
     
     print(section_tag)
