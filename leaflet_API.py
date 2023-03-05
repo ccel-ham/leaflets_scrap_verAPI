@@ -65,7 +65,7 @@ def scraping_Tokubai(name, url):
     #print(soup)
     section_tag = soup.find(id="leaflet")
     
-    print(section_tag)
+    #print(section_tag)
     img_tags = section_tag.find_all('img')
     base64_list = {}
     image_list = {}
