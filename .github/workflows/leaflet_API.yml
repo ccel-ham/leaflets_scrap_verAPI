@@ -1,10 +1,10 @@
 #ワークフロー名
 name: leaflet_API
 on:
-  #push:
-  schedule:
+  push:
+  #schedule:
   #7:00起動
-   - cron: '0 22 * * *'
+  # - cron: '0 22 * * *'
 
 jobs:
   build:
