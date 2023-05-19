@@ -50,6 +50,10 @@ def scraping_yama():
             img_tag = a_tag.find('img')
             _img = img_tag.get("src")
             img_url = url_header + _img.replace("../","")
+            regex = re.compile(f"{url_header}.+?advanced_information_id=\d+&index=\d+")
+            result = re.match(regex, img_url)
+            if result:
+              img_url = result.group()
             base64data, image = get_image_base64(img_url)
             base64_list[f"yamada-{i}"] = base64data
             image_list[f"yamada-{i}"] = image
