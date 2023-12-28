@@ -76,14 +76,15 @@ def scraping_Tokubai(name, url):
     i = 1
     for img_tag in img_tags:
         img = img_tag.get("data-src")
-        pattern = '/w=\d*,h=\d*,mc=true,wo=\d*,ho=\d*,cw=\d*,ch=\d*,aw=\d*/'
-        result = re.search(pattern, img)
-        str = result.group()
-        img_url = img.replace(str, "/o=true/")
-        base64data, image = get_image_base64(img_url)
-        base64_list[f"{name}-{i}"] = base64data
-        image_list [f"{name}-{i}"] = image
-        i += 1
+        if img:
+            pattern = '/w=\d*,h=\d*,mc=true,wo=\d*,ho=\d*,cw=\d*,ch=\d*,aw=\d*/'
+            result = re.search(pattern, img)
+            str = result.group()
+            img_url = img.replace(str, "/o=true/")
+            base64data, image = get_image_base64(img_url)
+            base64_list[f"{name}-{i}"] = base64data
+            image_list [f"{name}-{i}"] = image
+            i += 1
     return base64_list, image_list
 
 
