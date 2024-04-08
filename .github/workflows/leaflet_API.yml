@@ -22,6 +22,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install requests
           pip install bs4
+          pip install Pillow
           
       - name: Run script
         run: |
