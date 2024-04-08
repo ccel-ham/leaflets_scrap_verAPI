@@ -2,6 +2,7 @@
 name: leaflet_API
 on:
   #push:
+  workflow_dispatch:
   schedule:
   #7:00起動
    - cron: '0 22 * * *'
