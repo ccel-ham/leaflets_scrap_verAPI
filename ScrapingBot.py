@@ -83,7 +83,6 @@ class TokubaiBot:
             return True
     
     def line_notify(self, message, image):
-        return 
         url = "https://notify-api.line.me/api/notify"
         headers = {"Authorization" : "Bearer "+ self.line_notify_token}
         payload = {"message" : message}
