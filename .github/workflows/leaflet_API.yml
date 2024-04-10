@@ -26,5 +26,8 @@ jobs:
           pip install Pillow
           
       - name: Run script
+        env:
+          LEAFLET_MANAGEMENT_URL: ${{ secrets.LEAFLET_MANAGEMENT_URL }}
+          LINE_NOTIFY_TOKEN: ${{ secrets.LINE_NOTIFY_TOKEN }}
         run: |
           python leaflet_API.py

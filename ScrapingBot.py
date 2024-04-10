@@ -1,5 +1,4 @@
 import base64
-import config
 import hashlib
 import io
 import re
@@ -8,11 +7,13 @@ from bs4 import BeautifulSoup
 from PIL import Image
 
 class TokubaiBot:
-    def __init__(self, shop_name, shop_id):
+    def __init__(self, shop_name, shop_id, line_notify_token):
         self.shop_id = shop_id
         self.shop_name = shop_name
         self.user_agent = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36'
         self.url = f'https://tokubai.co.jp/{shop_id}'
+        self.line_notify_token = line_notify_token
+        self.post_flag = False
         self.image_storage = {}
         self.counter = 1
 
@@ -68,7 +69,9 @@ class TokubaiBot:
             image_data = self.image_storage[key]
             if self.leaflet_update_check(image_data["hash"], stored_hash_list):
                 print(f"post to LINE {key}")
-                self.line_notify(image_data["image"])
+                post_message = f"\n{self.shop_name}'s New Leaflet"
+                post_image = self.compress_image_under_3MG_bytes(image_data["image"])
+                self.line_notify(post_message, post_image)
 
     def leaflet_update_check(self, leaflet_hash, stored_hash_list):
         if leaflet_hash in stored_hash_list:
@@ -76,13 +79,13 @@ class TokubaiBot:
             return False
         else:
             print(f"{self.shop_name} - UP DATE")
+            self.post_flag = True
             return True
     
-    def line_notify(self, image):
-        image = self.compress_image_under_3MG_bytes(image)
+    def line_notify(self, message, image):
+        return 
         url = "https://notify-api.line.me/api/notify"
-        headers = {"Authorization" : "Bearer "+ config.LINE_TOKEN}
-        message = f"\n{self.shop_name}'s New Leaflet"
+        headers = {"Authorization" : "Bearer "+ self.line_notify_token}
         payload = {"message" : message}
         files = {"imageFile": image}
         res = requests.post(url, headers=headers, params=payload, files=files)
@@ -103,7 +106,7 @@ class TokubaiBot:
             output.seek(0)
         return output.getvalue()
         
-    def output_update_base64_dictionary(self):
+    def output_base64_dictionary(self):
         output_dict = {}
         for key in self.image_storage.keys():
             image_data = self.image_storage[key]
@@ -111,11 +114,13 @@ class TokubaiBot:
         return output_dict     
 
 class YamadaBotCustomTokubai(TokubaiBot):
-    def __init__(self, shop_name):
+    def __init__(self, shop_name, line_notify_token):
         self.shop_name = shop_name
         self.user_agent = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36'
         self.url_header = "http://www.super-yamadaya.com/"
         self.url = f"{self.url_header}sp/store/momoyama.html"
+        self.line_notify_token = line_notify_token
+        self.post_flag = False
         self.image_storage = {}
         self.counter = 1
     
