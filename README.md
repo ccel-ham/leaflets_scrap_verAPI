@@ -21,8 +21,8 @@ TokubaiBot クラスは、特定の店舗からチラシの画像を取得し、
 # 使用上の注意
 チラシ更新の管理に下記機能を有するGASのエンドポイントを使用しています。
 
-##必要機能
+## 必要機能
 
-**Get requests**　→　”leaflet_hash”がキーになる、保存中のチラシのhash値が ” , ” 区切りの文字列で返されます。
+**Get requests**　→　”leaflet_hash”がKeyの保存中のチラシのhash値が ” , ” 区切りの文字列で返されます。
 
 **Post requests**　→　ファイル名と画像データをGoogleDriveへ保存します。
