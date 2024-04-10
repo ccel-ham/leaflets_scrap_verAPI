@@ -7,13 +7,17 @@ TokubaiBot クラスは、特定の店舗からチラシの画像を取得し、
 
 # 使用ライブラリ
 **requests**: HTTPリクエストを送信するためのPythonライブラリです。
-  **BeautifulSoup**: HTMLやXMLからデータを抽出するためのPythonライブラリです。
-  **PIL (Python Imaging Library)**: 画像処理ライブラリであり、画像の圧縮や処理を行うために使用されます。
-  **base64**: バイナリデータをテキストデータにエンコードするためのPythonモジュールです。
-  **hashlib**: ハッシュ関数を提供するPython標準ライブラリです。
+
+**BeautifulSoup**: HTMLやXMLからデータを抽出するためのPythonライブラリです。
+
+**PIL (Python Imaging Library)**: 画像処理ライブラリであり、画像の圧縮や処理を行うために使用されます。
+
+**base64**: バイナリデータをテキストデータにエンコードするためのPythonモジュールです。
+
+**hashlib**: ハッシュ関数を提供するPython標準ライブラリです。
 
 # 使用上の注意
 チラシ更新の管理にGASのエンドポイントを使用しています。
 更新のみの取得にはGASのプログラムも必要です。
-get requestsで”leaflet_hash”がキーになる、保存中のチラシのhash値が ” , ” 区切りの文字列で返されます。
-pot requestsでファイル名と画像データをGoogleDriveへ保存します。
+Get requestsで”leaflet_hash”がキーになる、保存中のチラシのhash値が ” , ” 区切りの文字列で返されます。
+Post requestsでファイル名と画像データをGoogleDriveへ保存します。
