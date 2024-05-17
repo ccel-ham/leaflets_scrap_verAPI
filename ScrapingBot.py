@@ -6,6 +6,7 @@ import requests
 from bs4 import BeautifulSoup
 from PIL import Image
 
+
 class TokubaiBot:
     def __init__(self, shop_name, shop_id, line_notify_token):
         self.shop_id = shop_id
@@ -29,21 +30,23 @@ class TokubaiBot:
         return res
 
     def find_image_tags(self, response):
-        soup = BeautifulSoup(response.text,"html.parser")
+        soup = BeautifulSoup(response.text, "html.parser")
         section_tag = soup.find(id="leaflet")
         image_tags = section_tag.find_all('img')
         return image_tags
 
     def image_url_parser(self, image_tags):
-        fullsize_image_list=[]
+        fullsize_image_list = []
         for image_tag in image_tags:
-            image_url = image_tag.get("data-src")
+            image_url = image_tag.get("src")
             if image_url:
                 pattern = '/w=\d*,h=\d*,mc=true,wo=\d*,ho=\d*,cw=\d*,ch=\d*,aw=\d*/'
                 result = re.search(pattern, image_url)
-                image_size_string = result.group()
-                fullsize_image_url = image_url.replace(image_size_string, "/o=true/")
-                fullsize_image_list.append(fullsize_image_url)
+                if result:
+                    image_size_string = result.group()
+                    fullsize_image_url = image_url.replace(
+                        image_size_string, "/o=true/")
+                    fullsize_image_list.append(fullsize_image_url)
         return fullsize_image_list
 
     def store_in_image_base64_hash(self, url_list):
@@ -54,7 +57,8 @@ class TokubaiBot:
             base64data = base64en.decode('utf-8')
             image_hash = self.calculate_hash(base64en)
             storage_key = f'{self.shop_name}-{self.counter}'
-            self.image_storage[storage_key] = {'image':image, 'base64': base64data, 'hash':image_hash}
+            self.image_storage[storage_key] = {
+                'image': image, 'base64': base64data, 'hash': image_hash}
             self.counter += 1
         return None
 
@@ -64,13 +68,14 @@ class TokubaiBot:
         return image_hash
 
     def new_leaflet_post_to_line(self, stored_hash_list):
-        #self.image_storage[storage_key] = {'image':image, 'base64': base64data, 'hash':image_hash}
+        # self.image_storage[storage_key] = {'image':image, 'base64': base64data, 'hash':image_hash}
         for key in self.image_storage.keys():
             image_data = self.image_storage[key]
             if self.leaflet_update_check(image_data["hash"], stored_hash_list):
                 print(f"post to LINE {key}")
                 post_message = f"\n{self.shop_name}'s New Leaflet"
-                post_image = self.compress_image_under_3MG_bytes(image_data["image"])
+                post_image = self.compress_image_under_3MG_bytes(
+                    image_data["image"])
                 self.line_notify(post_message, post_image)
 
     def leaflet_update_check(self, leaflet_hash, stored_hash_list):
@@ -81,16 +86,16 @@ class TokubaiBot:
             print(f"{self.shop_name} - UP DATE")
             self.post_flag = True
             return True
-    
+
     def line_notify(self, message, image):
         url = "https://notify-api.line.me/api/notify"
-        headers = {"Authorization" : "Bearer "+ self.line_notify_token}
-        payload = {"message" : message}
+        headers = {"Authorization": "Bearer " + self.line_notify_token}
+        payload = {"message": message}
         files = {"imageFile": image}
         res = requests.post(url, headers=headers, params=payload, files=files)
         if res.status_code >= 300:
             print(f"{res.text}")
-    
+
     def compress_image_under_3MG_bytes(self, image_data, target_size=3):
         quality = 100
         image_io = io.BytesIO(image_data)
@@ -104,13 +109,14 @@ class TokubaiBot:
             image.save(output, format='JPEG', quality=quality)
             output.seek(0)
         return output.getvalue()
-        
+
     def output_base64_dictionary(self):
         output_dict = {}
         for key in self.image_storage.keys():
             image_data = self.image_storage[key]
             output_dict[key] = image_data["base64"]
-        return output_dict     
+        return output_dict
+
 
 class YamadaBotCustomTokubai(TokubaiBot):
     def __init__(self, shop_name, line_notify_token):
@@ -122,7 +128,7 @@ class YamadaBotCustomTokubai(TokubaiBot):
         self.post_flag = False
         self.image_storage = {}
         self.counter = 1
-    
+
     def find_image_tags(self, response):
         image_tags = []
         soup = BeautifulSoup(response.text, "html.parser")
@@ -139,13 +145,14 @@ class YamadaBotCustomTokubai(TokubaiBot):
         image_url_list = []
         for image_tag in image_tags:
             image_src = image_tag.get("src")
-            img_url = self.url_header + image_src.replace("../","")
+            img_url = self.url_header + image_src.replace("../", "")
             pattern = f"{self.url_header}.+?advanced_information_id=\d+&index=\d+"
             result = re.search(pattern, img_url)
             if result:
                 image_url = result.group()
                 image_url_list.append(image_url)
         return image_url_list
+
 
 if __name__ == "__main__":
     pass

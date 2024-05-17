@@ -7,9 +7,11 @@ from ScrapingBot import TokubaiBot, YamadaBotCustomTokubai
 GOOGLE_URL = os.environ.get('LEAFLET_MANAGEMENT_URL')
 LINE_NOTIFY_TOKEN = os.environ.get('LINE_NOTIFY_TOKEN')
 
+
 class KeepStorage:
     base64_dict = {}
     update_flag = False
+
 
 def tokubai_process(shop_dict, stored_hash_list):
     for name, shop_id in shop_dict.items():
@@ -31,11 +33,13 @@ def yamada_process(stored_hash_list):
     if bot.post_flag:
         KeepStorage.update_flag = True
 
+
 def get_stored_leaflet_hash():
     print("get-API...")
     response = requests.get(GOOGLE_URL)
     content = response.json()
     return content
+
 
 def post_to_leaflet_update(base64_dict):
     print("post-API...")
@@ -43,11 +47,13 @@ def post_to_leaflet_update(base64_dict):
     response = requests.post(GOOGLE_URL, data=data)
     print(f"Response Code: {response.status_code} - {response.text}")
 
+
 def main():
     print("start...")
     start = time.time()
-    SHOP_INFOMATION = {"cosmo":"115207", "matsumoto":"44919", "sugi":"258839"}
-    
+    SHOP_INFOMATION = {"cosmo": "115207",
+                       "matsumoto": "44919", "sugi": "258839"}
+
     api_dict = get_stored_leaflet_hash()
     stored_hash_list = api_dict["leaflet_hash"].split(",")
 
@@ -62,6 +68,7 @@ def main():
     print("...END")
     print(f"PROCCESSING TIME: {round(time.time()-start)} sec")
     return
+
 
 if __name__ == "__main__":
     main()
