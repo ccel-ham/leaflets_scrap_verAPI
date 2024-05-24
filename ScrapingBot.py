@@ -38,7 +38,7 @@ class TokubaiBot:
     def image_url_parser(self, image_tags):
         fullsize_image_list = []
         for image_tag in image_tags:
-            image_url = image_tag.get("src")
+            image_url = image_tag.get("data-src")
             if image_url:
                 pattern = '/w=\d*,h=\d*,mc=true,wo=\d*,ho=\d*,cw=\d*,ch=\d*,aw=\d*/'
                 result = re.search(pattern, image_url)
