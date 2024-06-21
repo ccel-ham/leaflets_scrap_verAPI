@@ -56,7 +56,7 @@ def main():
 
     api_dict = get_stored_leaflet_hash()
     stored_hash_list = api_dict["leaflet_hash"].split(",")
-
+    stored_hash_list = []
     yamada_process(stored_hash_list)
     tokubai_process(SHOP_INFOMATION, stored_hash_list)
 

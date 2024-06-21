@@ -32,7 +32,10 @@ class TokubaiBot:
     def find_image_tags(self, response):
         soup = BeautifulSoup(response.text, "html.parser")
         section_tag = soup.find(id="leaflet")
-        image_tags = section_tag.find_all('img')
+        if section_tag:
+            image_tags = section_tag.find_all('img')
+        else:
+            image_tags = []
         return image_tags
 
     def image_url_parser(self, image_tags):
