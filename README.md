@@ -1,4 +1,4 @@
-<img src="https://qiita-user-contents.imgix.net/https%3A%2F%2Fimg.shields.io%2Fbadge%2F-Python-F2C63C.svg%3Flogo%3Dpython%26style%3Dfor-the-badge?ixlib=rb-4.0.0&amp;auto=format&amp;gif-q=60&amp;q=75&amp;s=c17144ccc12f9c19e9dbba2eec5c7980" data-canonical-src="https://img.shields.io/badge/-Python-F2C63C.svg?logo=python&amp;style=for-the-badge" srcset="https://qiita-user-contents.imgix.net/https%3A%2F%2Fimg.shields.io%2Fbadge%2F-Python-F2C63C.svg%3Flogo%3Dpython%26style%3Dfor-the-badge?ixlib=rb-4.0.0&amp;auto=format&amp;gif-q=60&amp;q=75&amp;w=1400&amp;fit=max&amp;s=5d7d909c2f70c6c8a0fc0477bd1a56ae 1x" loading="lazy">
+<img src="https://img.shields.io/badge/-Python-F9DC3E.svg?logo=python&style=flat" data-canonical-src="https://img.shields.io/badge/-Python-F2C63C.svg?logo=python&amp;style=for-the-badge" srcset="https://qiita-user-contents.imgix.net/https%3A%2F%2Fimg.shields.io%2Fbadge%2F-Python-F2C63C.svg%3Flogo%3Dpython%26style%3Dfor-the-badge?ixlib=rb-4.0.0&amp;auto=format&amp;gif-q=60&amp;q=75&amp;w=1400&amp;fit=max&amp;s=5d7d909c2f70c6c8a0fc0477bd1a56ae 1x" loading="lazy">
 
 # プロジェクトの概要
 このプロジェクトは、特定のウェブサイトからチラシの画像を取得し、更新があればLINE通知を送信するためのスクリプトです。
